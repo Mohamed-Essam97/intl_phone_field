@@ -12,6 +12,7 @@ import './phone_number.dart';
 class IntlPhoneField extends StatefulWidget {
   /// Whether to hide the text being edited (e.g., for passwords).
   final bool obscureText;
+  final String locale;
 
   /// How the text should be aligned horizontally.
   final TextAlign textAlign;
@@ -244,6 +245,7 @@ class IntlPhoneField extends StatefulWidget {
     this.textAlign = TextAlign.left,
     this.textAlignVertical,
     this.onTap,
+    this.locale = 'en',
     this.readOnly = false,
     this.initialValue,
     this.keyboardType = TextInputType.phone,
@@ -356,6 +358,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       useRootNavigator: false,
       builder: (context) => StatefulBuilder(
         builder: (ctx, setState) => CountryPickerDialog(
+          locale: widget.locale,
           style: widget.pickerDialogStyle,
           filteredCountries: filteredCountries,
           searchText: widget.searchText,

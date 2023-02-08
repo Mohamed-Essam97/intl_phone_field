@@ -42,6 +42,7 @@ class CountryPickerDialog extends StatefulWidget {
   final Country selectedCountry;
   final ValueChanged<Country> onCountryChanged;
   final String searchText;
+  final String locale;
   final List<Country> filteredCountries;
   final PickerDialogStyle? style;
 
@@ -50,6 +51,7 @@ class CountryPickerDialog extends StatefulWidget {
     required this.searchText,
     required this.countryList,
     required this.onCountryChanged,
+    required this.locale,
     required this.selectedCountry,
     required this.filteredCountries,
     this.style,
@@ -103,7 +105,9 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                           .where((country) => country.dialCode.contains(value))
                           .toList()
                       : widget.countryList
-                          .where((country) => country.name
+                          .where((country) => (widget.locale == 'ar'
+                                  ? country.arName
+                                  : country.name)
                               .toLowerCase()
                               .contains(value.toLowerCase()))
                           .toList();
