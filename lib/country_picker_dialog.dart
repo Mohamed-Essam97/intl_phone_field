@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/helpers.dart';
 
 class PickerDialogStyle {
   final Color? backgroundColor;
@@ -90,32 +89,32 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
         padding: widget.style?.padding ?? EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: widget.style?.searchFieldPadding ?? EdgeInsets.all(0),
-              child: TextField(
-                cursorColor: widget.style?.searchFieldCursorColor,
-                decoration: widget.style?.searchFieldInputDecoration ??
-                    InputDecoration(
-                      suffixIcon: Icon(Icons.search),
-                      labelText: widget.searchText,
-                    ),
-                onChanged: (value) {
-                  _filteredCountries = isNumeric(value)
-                      ? widget.countryList
-                          .where((country) => country.dialCode.contains(value))
-                          .toList()
-                      : widget.countryList
-                          .where((country) => (widget.locale == 'ar'
-                                  ? country.arName
-                                  : country.name)
-                              .toLowerCase()
-                              .contains(value.toLowerCase()))
-                          .toList();
-                  if (this.mounted) setState(() {});
-                },
-              ),
-            ),
-            SizedBox(height: 20),
+            // Padding(
+            //   padding: widget.style?.searchFieldPadding ?? EdgeInsets.all(0),
+            //   child: TextField(
+            //     cursorColor: widget.style?.searchFieldCursorColor,
+            //     decoration: widget.style?.searchFieldInputDecoration ??
+            //         InputDecoration(
+            //           suffixIcon: Icon(Icons.search),
+            //           labelText: widget.searchText,
+            //         ),
+            //     onChanged: (value) {
+            //       _filteredCountries = isNumeric(value)
+            //           ? widget.countryList
+            //               .where((country) => country.dialCode.contains(value))
+            //               .toList()
+            //           : widget.countryList
+            //               .where((country) => (widget.locale == 'ar'
+            //                       ? country.arName
+            //                       : country.name)
+            //                   .toLowerCase()
+            //                   .contains(value.toLowerCase()))
+            //               .toList();
+            //       if (this.mounted) setState(() {});
+            //     },
+            //   ),
+            // ),
+            // SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -130,7 +129,9 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                       ),
                       contentPadding: widget.style?.listTilePadding,
                       title: Text(
-                        _filteredCountries[index].name,
+                        widget.locale == "ar"
+                            ? _filteredCountries[index].arName
+                            : _filteredCountries[index].name,
                         style: widget.style?.countryNameStyle ??
                             TextStyle(fontWeight: FontWeight.w700),
                       ),
