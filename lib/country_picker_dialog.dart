@@ -75,6 +75,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
   @override
   Widget build(BuildContext context) {
     final mediaWidth = MediaQuery.of(context).size.width;
+    final mediaHight = MediaQuery.of(context).size.height;
     final width = widget.style?.width ?? mediaWidth;
     final defaultHorizontalPadding = 40.0;
     final defaultVerticalPadding = 24.0;
@@ -86,6 +87,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
               : defaultHorizontalPadding),
       backgroundColor: widget.style?.backgroundColor,
       child: Container(
+        height: mediaHight / 2,
         padding: widget.style?.padding ?? EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
