@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/helpers.dart';
 
 class PickerDialogStyle {
   final Color? backgroundColor;
@@ -75,48 +76,46 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
   @override
   Widget build(BuildContext context) {
     final mediaWidth = MediaQuery.of(context).size.width;
-    final mediaHight = MediaQuery.of(context).size.height;
     final width = widget.style?.width ?? mediaWidth;
     final defaultHorizontalPadding = 40.0;
     final defaultVerticalPadding = 24.0;
     return Dialog(
       insetPadding: EdgeInsets.symmetric(
-          // vertical: defaultVerticalPadding,
+          vertical: defaultVerticalPadding,
           horizontal: mediaWidth > (width + defaultHorizontalPadding * 2)
               ? (mediaWidth - width) / 2
               : defaultHorizontalPadding),
       backgroundColor: widget.style?.backgroundColor,
       child: Container(
-        height: mediaHight / 2,
         padding: widget.style?.padding ?? EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            // Padding(
-            //   padding: widget.style?.searchFieldPadding ?? EdgeInsets.all(0),
-            //   child: TextField(
-            //     cursorColor: widget.style?.searchFieldCursorColor,
-            //     decoration: widget.style?.searchFieldInputDecoration ??
-            //         InputDecoration(
-            //           suffixIcon: Icon(Icons.search),
-            //           labelText: widget.searchText,
-            //         ),
-            //     onChanged: (value) {
-            //       _filteredCountries = isNumeric(value)
-            //           ? widget.countryList
-            //               .where((country) => country.dialCode.contains(value))
-            //               .toList()
-            //           : widget.countryList
-            //               .where((country) => (widget.locale == 'ar'
-            //                       ? country.arName
-            //                       : country.name)
-            //                   .toLowerCase()
-            //                   .contains(value.toLowerCase()))
-            //               .toList();
-            //       if (this.mounted) setState(() {});
-            //     },
-            //   ),
-            // ),
-            // SizedBox(height: 20),
+            Padding(
+              padding: widget.style?.searchFieldPadding ?? EdgeInsets.all(0),
+              child: TextField(
+                cursorColor: widget.style?.searchFieldCursorColor,
+                decoration: widget.style?.searchFieldInputDecoration ??
+                    InputDecoration(
+                      suffixIcon: Icon(Icons.search),
+                      labelText: widget.searchText,
+                    ),
+                onChanged: (value) {
+                  _filteredCountries = isNumeric(value)
+                      ? widget.countryList
+                          .where((country) => country.dialCode.contains(value))
+                          .toList()
+                      : widget.countryList
+                          .where((country) => (widget.locale == 'ar'
+                                  ? country.arName
+                                  : country.name)
+                              .toLowerCase()
+                              .contains(value.toLowerCase()))
+                          .toList();
+                  if (this.mounted) setState(() {});
+                },
+              ),
+            ),
+            SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -131,9 +130,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                       ),
                       contentPadding: widget.style?.listTilePadding,
                       title: Text(
-                        widget.locale == "ar"
-                            ? _filteredCountries[index].arName
-                            : _filteredCountries[index].name,
+                        _filteredCountries[index].name,
                         style: widget.style?.countryNameStyle ??
                             TextStyle(fontWeight: FontWeight.w700),
                       ),
