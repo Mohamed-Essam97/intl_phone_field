@@ -105,9 +105,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                           .where((country) => country.dialCode.contains(value))
                           .toList()
                       : widget.countryList
-                          .where((country) => (widget.locale == 'ar'
-                                  ? country.arName
-                                  : country.name)
+                          .where((country) => country.name
                               .toLowerCase()
                               .contains(value.toLowerCase()))
                           .toList();
@@ -130,7 +128,9 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                       ),
                       contentPadding: widget.style?.listTilePadding,
                       title: Text(
-                        _filteredCountries[index].name,
+                        widget.locale == 'ar'
+                            ? _filteredCountries[index].arName
+                            : _filteredCountries[index].name,
                         style: widget.style?.countryNameStyle ??
                             TextStyle(fontWeight: FontWeight.w700),
                       ),
