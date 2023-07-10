@@ -584,7 +584,7 @@ const List<Country> countries = [
     arName: "مصر",
     flag: "🇪🇬",
     code: "EG",
-    dialCode: "20",
+    dialCode: "2",
     minLength: 11,
     maxLength: 11,
   ),
