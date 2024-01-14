@@ -378,7 +378,6 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      enableInteractiveSelection: true,
       initialValue: (widget.controller == null) ? number : null,
       readOnly: widget.readOnly,
       obscureText: widget.obscureText,
@@ -442,54 +441,50 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
     );
   }
 
-  Align _buildFlagsButton() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        margin: widget.flagsButtonMargin,
-        child: DecoratedBox(
-          decoration: widget.dropdownDecoration,
-          child: InkWell(
-            borderRadius:
-                widget.dropdownDecoration.borderRadius as BorderRadius?,
-            child: Padding(
-              padding: widget.flagsButtonPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  if (widget.enabled &&
-                      widget.showDropdownIcon &&
-                      widget.dropdownIconPosition == IconPosition.leading) ...[
-                    widget.dropdownIcon,
-                    SizedBox(width: 4),
-                  ],
-                  if (widget.showCountryFlag) ...[
-                    Image.asset(
-                      'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
-                      package: 'intl_phone_field',
-                      width: 32,
-                    ),
-                    SizedBox(width: 8),
-                  ],
-                  FittedBox(
-                    child: Text(
-                      '+${_selectedCountry.dialCode}',
-                      style: widget.dropdownTextStyle,
-                    ),
+  Container _buildFlagsButton() {
+    return Container(
+      margin: widget.flagsButtonMargin,
+      child: DecoratedBox(
+        decoration: widget.dropdownDecoration,
+        child: InkWell(
+          borderRadius: widget.dropdownDecoration.borderRadius as BorderRadius?,
+          child: Padding(
+            padding: widget.flagsButtonPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                if (widget.enabled &&
+                    widget.showDropdownIcon &&
+                    widget.dropdownIconPosition == IconPosition.leading) ...[
+                  widget.dropdownIcon,
+                  SizedBox(width: 4),
+                ],
+                if (widget.showCountryFlag) ...[
+                  Image.asset(
+                    'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
+                    package: 'intl_phone_field',
+                    width: 32,
                   ),
-                  if (widget.enabled &&
-                      widget.showDropdownIcon &&
-                      widget.dropdownIconPosition == IconPosition.trailing) ...[
-                    SizedBox(width: 4),
-                    widget.dropdownIcon,
-                  ],
                   SizedBox(width: 8),
                 ],
-              ),
+                FittedBox(
+                  child: Text(
+                    '+${_selectedCountry.dialCode}',
+                    style: widget.dropdownTextStyle,
+                  ),
+                ),
+                if (widget.enabled &&
+                    widget.showDropdownIcon &&
+                    widget.dropdownIconPosition == IconPosition.trailing) ...[
+                  SizedBox(width: 4),
+                  widget.dropdownIcon,
+                ],
+                SizedBox(width: 8),
+              ],
             ),
-            onTap: widget.enabled ? _changeCountry : null,
           ),
+          onTap: widget.enabled ? _changeCountry : null,
         ),
       ),
     );
